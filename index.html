@@ -94,6 +94,10 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .project-chip small{display:block;color:var(--muted);font-weight:500;margin-top:3px}
 .project-chip.link{cursor:pointer;transition:.12s}
 .project-chip.link:hover{color:var(--accent)}
+/* 타 본부 참여자 — 전략기획본부 인원과 구분되게 보라 테두리로 감싼다 */
+.project-chip.ext{border:1px solid #cdbcf2;background:#f9f6ff;border-radius:9px;padding:9px 11px;margin:5px 0}
+.project-chip.ext small{color:#6d28d9}
+.ext-cnt{color:#6d28d9;font-weight:700}
 .meter{height:6px;background:#eef1f4;border-radius:999px;overflow:hidden;margin:12px 0}
 .meter i{display:block;height:100%;background:var(--accent);border-radius:999px}
 /* ── member picker ── */
@@ -189,6 +193,9 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .panel,[data-theme=dark] .profile-card{box-shadow:none}
 [data-theme=dark] ::selection{background:#28407a}
 [data-theme=dark] .top{background:rgba(15,18,24,.85)}
+[data-theme=dark] .project-chip.ext{border-color:#3f3468;background:#1d1832}
+[data-theme=dark] .project-chip.ext small{color:#b6a0f2}
+[data-theme=dark] .ext-cnt{color:#b6a0f2}
 [data-theme=dark] .tabbar{background:rgba(15,18,26,.9);border-bottom-color:var(--line)}
 [data-theme=dark] .tabbar .seg{background:#1b202b}
 [data-theme=dark] .tabbar button.active{background:#2a3242;color:#8fb0f5;box-shadow:0 1px 2px rgba(0,0,0,.35)}
@@ -251,7 +258,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 <div class="sec-body duo"><div class="panel"><div class="toolbar"><input id="memberSearch" placeholder="이름으로 빠르게 찾기"><button class="ghost" id="clearBtn">선택 해제</button></div><div id="memberGrid" class="member-grid"></div><div id="selectedStrip" class="selected-strip"></div></div>
 <div class="result-col"><div class="panel"><p class="sub-title">전원 공통 과제</p><div id="commonCards" class="common-cards"></div></div><div class="panel"><p class="sub-title">부분 겹침 <small>— 전원 공통이 없을 때 대안</small></p><div id="overlapList" class="overlap-list"></div></div></div></div>
 <div id="profileStack" class="card-row"></div></div></section>
-<section id="sec-project" class="band"><div class="band-inner"><div class="sec-head"><h2>과제별 참여자 보기</h2><p>과제를 선택하면 참여자와 참여율이 표시됩니다. 개인 카드의 과제를 눌러도 이곳으로 연결됩니다. 검색은 Enter. 참여자는 전략기획본부 인원만 표시됩니다.</p></div>
+<section id="sec-project" class="band"><div class="band-inner"><div class="sec-head"><h2>과제별 참여자 보기</h2><p>과제를 선택하면 참여자와 참여율이 표시됩니다. 개인 카드의 과제를 눌러도 이곳으로 연결됩니다. 검색은 Enter. 같은 과제에 참여하는 타 본부 인원은 보라 테두리로 따로 표시됩니다.</p></div>
 <div class="sec-body quick-layout"><div class="list-col"><input id="projectSearch" placeholder="과제명 검색 후 Enter" style="margin-bottom:10px"><div id="projectList" class="name-list"></div></div><div id="projectPanel" class="profile-card"></div></div></div></section>
 <section id="sec-status" class="band"><div class="band-inner"><div class="sec-head"><h2>과제 현황과 점검</h2><p>과제별로 몇 명이 붙어 있고 인건비가 얼마나 실려 있는지를 정렬해서 보여줍니다. 과제를 클릭하면 참여자 목록으로 이동합니다. 오른쪽은 이번 달 확인이 필요한 항목만 모은 것입니다.</p></div>
 <div class="sec-body status-layout">
@@ -274,6 +281,9 @@ function ruleInfo(p){const lead=[],co=[];for(const[n,v]of Object.entries(PROJECT
 function ruleBadge(p){const r=ruleInfo(p);const state=(r.lead.length>3||r.part>5)?' bad':r.lead.length===3?' warn':'';const tip='3책5공(국가연구개발혁신법 시행령 제64조): 동시수행 5과제, 연구책임자 3과제 이내'+(r.lead.length?' | 책임과제(주관): '+r.lead.join(', '):'')+(r.co.length?' | 공동기관 책임 '+r.co.length+'건('+r.co.join(', ')+') — 3책 미포함':'')+' | 잔여기간 4개월 미만 등 제외과제 미반영 단순 집계';return '<span class="rule-badge" title="'+tip+'">3책/5공 <span class="rb'+state+'">'+r.lead.length+'/'+r.part+'</span></span>'}
 // 전략기획본부 참여율 시트 밖에 배정된 인원 (합계 100% 미만의 사유)
 const OUTSIDE={"윤윤기":{pct:10,where:"기업지원"},"예준호":{pct:20,where:"시험평가본부"}};
+// 같은 과제에 참여하는 타 본부 인원 (인건비관리 26년 v6.4 8월 변경 · 참여율 시트 전 본부 블록)
+// 과제별 참여자 보기에만 표시한다. 인원수·매트릭스·공통 과제 찾기는 전략기획본부 41명 기준 그대로.
+const OUTSIDE_MEMBERS={"(과)원격지원":[{name:"김민정",role:"연구원",pct:20,dept:"PG운영본부"}],"(과)강화학습":[{name:"김민정",role:"연구원",pct:10,dept:"PG운영본부"}],"(산)SDV보안평가센터":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"},{name:"서희서",role:"주임",pct:20,dept:"PG운영본부"},{name:"정대훈",role:"주임",pct:20,dept:"PG운영본부"},{name:"장준혁",role:"주임",pct:20,dept:"PG운영본부"},{name:"주용환",role:"선임",pct:20,dept:"기업지원"},{name:"양영호",role:"선임",pct:10,dept:"경영기획"},{name:"하상욱",role:"팀장",pct:10,dept:"PG운영본부"},{name:"백정원",role:"주임",pct:10,dept:"PG운영본부"},{name:"임태호",role:"책임",pct:10,dept:"기업지원"},{name:"이진원",role:"책임",pct:10,dept:"기업지원"},{name:"이진옥",role:"선임",pct:10,dept:"기업지원"},{name:"양영호",role:"선임",pct:10,dept:"기업지원"},{name:"이원용",role:"선임",pct:10,dept:"기업지원"},{name:"이진영",role:"주임",pct:10,dept:"기업지원"},{name:"구본민",role:"주임",pct:10,dept:"기업지원"},{name:"서승희",role:"연구원",pct:10,dept:"기업지원"},{name:"이호열",role:"연구원",pct:10,dept:"기업지원"}],"(산)기능재구성":[{name:"정대훈",role:"주임",pct:20,dept:"PG운영본부"},{name:"서희서",role:"주임",pct:10,dept:"PG운영본부"}],"(산)구동모터모듈":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)초안전플랫폼":[{name:"백기동",role:"연구원",pct:20,dept:"PG운영본부"},{name:"하상욱",role:"팀장",pct:20,dept:"PG운영본부"},{name:"현상엽",role:"선임",pct:20,dept:"PG운영본부"},{name:"이학주",role:"팀장",pct:20,dept:"시험평가"},{name:"백정원",role:"주임",pct:10,dept:"PG운영본부"}],"(산)AAM인버터":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)AAM통합평가":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)인력양성27":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"하상욱",role:"팀장",pct:20,dept:"PG운영본부"},{name:"백정원",role:"주임",pct:20,dept:"PG운영본부"},{name:"김민정",role:"연구원",pct:20,dept:"PG운영본부"}],"(과)3Tier통합검증":[{name:"김기주",role:"책임",pct:10,dept:"PG운영본부"}],"(국)EV컨버전":[{name:"이시목",role:"선임",pct:10,dept:"시험평가"},{name:"김도연",role:"선임",pct:10,dept:"시험평가"},{name:"박세웅",role:"주임",pct:10,dept:"시험평가"},{name:"이현석",role:"연구원",pct:10,dept:"시험평가"}],"(산)합성데이터":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)제조AI":[{name:"백기동",role:"연구원",pct:30,dept:"PG운영본부"},{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"},{name:"김재식",role:"주임",pct:20,dept:"PG운영본부"},{name:"이원용",role:"선임",pct:10,dept:"기업지원"},{name:"이진영",role:"주임",pct:10,dept:"기업지원"},{name:"구본민",role:"주임",pct:10,dept:"기업지원"}],"(산)고성능플랫폼":[{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"}],"(산)SBOM":[{name:"백기동",role:"연구원",pct:20,dept:"PG운영본부"}],"(산)인포테인먼트":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"김민정",role:"연구원",pct:10,dept:"PG운영본부"}],"(산)휴머노이드안전":[{name:"이현석",role:"연구원",pct:30,dept:"시험평가"},{name:"김도연",role:"선임",pct:20,dept:"시험평가"},{name:"박세웅",role:"주임",pct:20,dept:"시험평가"},{name:"심재록",role:"팀장",pct:10,dept:"시험평가"},{name:"조효증",role:"책임",pct:10,dept:"시험평가"},{name:"백준병",role:"팀장",pct:10,dept:"시험평가"},{name:"이시목",role:"선임",pct:10,dept:"시험평가"}],"(산)피지컬AI":[{name:"김재식",role:"주임",pct:20,dept:"PG운영본부"}]};
 const selected=new Set();
 let focusedProject=projectNames[0];
 let projQuery='';
@@ -292,7 +302,13 @@ function showTab(id){if(!TAB_IDS.includes(id))id=TAB_IDS[0];
  document.querySelectorAll('#tabBar button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
  window.scrollTo({top:0,behavior:'smooth'})}
 function projectParticipants(name){return PEOPLE.filter(p=>projectPct(p,name)>0).map(p=>({name:p.name,role:p.role,pct:projectPct(p,name)})).sort((a,b)=>b.pct-a.pct||a.name.localeCompare(b.name))}
-function renderProjectView(){const list=projectNames.filter(n=>!projQuery||n.includes(projQuery));if(!list.includes(focusedProject)&&list.length)focusedProject=list[0];$('projectList').innerHTML=list.map(n=>'<button class="name-btn '+(n===focusedProject?'active':'')+'" onclick="focusProject(\''+n+'\')">'+n+' <small>'+projectParticipants(n).length+'명</small></button>').join('')||'<div class="empty">검색 결과 없음</div>';const parts=focusedProject?projectParticipants(focusedProject):[];const totalPct=parts.reduce((s,x)=>s+x.pct,0);$('projectPanel').innerHTML=focusedProject?'<div class="profile-head"><div><h3>'+focusedProject+'</h3><small>참여자 '+parts.length+'명'+(PROJECT_PI[focusedProject]?' · 책임자 <b>'+PROJECT_PI[focusedProject].pi+'</b>'+(PROJECT_PI[focusedProject].lead?'<em class="lead-tag" title="주관과제 연구책임자 — 3책(책임자 3과제 제한) 대상">주관 · 3책 대상</em>':'<em class="lead-tag co" title="공동연구개발기관 책임자 — 3책 미포함">공동기관</em>'):'')+'</small></div><div class="profile-total">'+totalPct+'%</div></div><div class="project-chips">'+parts.map(x=>'<div class="project-chip">'+x.name+(PROJECT_PI[focusedProject]&&PROJECT_PI[focusedProject].pi===x.name?'<em class="lead-tag'+(PROJECT_PI[focusedProject].lead?'':' co')+'">책임</em>':'')+'<small>'+x.role+' · '+fmt(x.pct)+'</small></div>').join('')+'</div>':'<div class="empty">과제를 선택하세요.</div>'}
+function renderProjectView(){const list=projectNames.filter(n=>!projQuery||n.includes(projQuery));if(!list.includes(focusedProject)&&list.length)focusedProject=list[0];$('projectList').innerHTML=list.map(n=>'<button class="name-btn '+(n===focusedProject?'active':'')+'" onclick="focusProject(\''+n+'\')">'+n+' <small>'+projectParticipants(n).length+'명</small></button>').join('')||'<div class="empty">검색 결과 없음</div>';const parts=focusedProject?projectParticipants(focusedProject):[];const totalPct=parts.reduce((s,x)=>s+x.pct,0);
+ const ext=focusedProject?(OUTSIDE_MEMBERS[focusedProject]||[]):[];
+ $('projectPanel').innerHTML=focusedProject?'<div class="profile-head"><div><h3>'+focusedProject+'</h3><small>전략기획본부 '+parts.length+'명'+(ext.length?' · <b class="ext-cnt">타 본부 '+ext.length+'명</b>':'')+(PROJECT_PI[focusedProject]?' · 책임자 <b>'+PROJECT_PI[focusedProject].pi+'</b>'+(PROJECT_PI[focusedProject].lead?'<em class="lead-tag" title="주관과제 연구책임자 — 3책(책임자 3과제 제한) 대상">주관 · 3책 대상</em>':'<em class="lead-tag co" title="공동연구개발기관 책임자 — 3책 미포함">공동기관</em>'):'')+'</small></div><div class="profile-total" title="전략기획본부 인원의 참여율 합계 (타 본부 인원은 제외)">'+totalPct+'%</div></div><div class="project-chips">'+parts.map(x=>'<div class="project-chip">'+x.name+(PROJECT_PI[focusedProject]&&PROJECT_PI[focusedProject].pi===x.name?'<em class="lead-tag'+(PROJECT_PI[focusedProject].lead?'':' co')+'">책임</em>':'')+'<small>'+x.role+' · '+fmt(x.pct)+'</small></div>').join('')
+ +ext.map(x=>'<div class="project-chip ext" title="'+x.dept+' 소속 — 전략기획본부 참여율 시트 밖 인원">'+x.name
+  +(PROJECT_PI[focusedProject]&&PROJECT_PI[focusedProject].pi===x.name?'<em class="lead-tag'+(PROJECT_PI[focusedProject].lead?'':' co')+'">책임</em>':'')
+  +'<small>'+x.dept+' · '+x.role+' · '+fmt(x.pct)+'</small></div>').join('')
+ +'</div>':'<div class="empty">과제를 선택하세요.</div>'}
 function renderProjRank(){
  const rows=projectNames.map(n=>{const ps=projectParticipants(n);return{name:n,cnt:ps.length,sum:ps.reduce((s,x)=>s+x.pct,0)}})
   .sort((a,b)=>b.cnt-a.cnt||b.sum-a.sum||a.name.localeCompare(b.name));

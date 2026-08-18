@@ -88,12 +88,14 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .profile-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:10px}
 .profile-head h3{font-size:21px;font-weight:800;letter-spacing:-.01em;margin:0}
 .profile-head small{color:var(--muted)}
-.profile-total{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--accent);line-height:1.1;font-variant-numeric:tabular-nums}
 .project-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0 22px;margin-top:14px}
 .project-chip{border:0;border-bottom:1px solid var(--line);background:transparent;border-radius:0;padding:11px 2px;font-weight:700;font-size:13.5px}
 .project-chip small{display:block;color:var(--muted);font-weight:500;margin-top:3px}
 .project-chip.link{cursor:pointer;transition:.12s}
 .project-chip.link:hover{color:var(--accent)}
+/* 과제 책임자 — 은은한 배경으로만 구분 (강조색·굵은 테두리는 쓰지 않는다) */
+.project-chip.pi{background:#eef4ff;border-bottom-color:#dbe6fb;border-radius:8px;padding:10px 11px;margin:3px 0}
+.project-chip.ext.pi{background:#f2ecff;border-color:#b9a3ee}
 /* 타 본부 참여자 — 전략기획본부 인원과 구분되게 보라 테두리로 감싼다 */
 .project-chip.ext{border:1px solid #cdbcf2;background:#f9f6ff;border-radius:9px;padding:9px 11px;margin:5px 0}
 .project-chip.ext small{color:#6d28d9}
@@ -136,9 +138,9 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .matrix th{background:#f7f8fa;color:var(--soft);font-weight:700}
 .matrix td:first-child,.matrix th:first-child{position:sticky;left:0;z-index:2;width:82px;min-width:82px;max-width:82px;background:#fff;text-align:center;padding:7px 10px}
 .matrix th:first-child{background:#f7f8fa}
-.matrix thead th:not(:first-child){line-height:1.4;vertical-align:middle;width:80px;min-width:80px;max-width:80px;padding:10px 5px;border-bottom:2px solid #dfe3e9;font-size:11.5px}
-.matrix thead th:not(:first-child) span{display:block;white-space:nowrap}
-.matrix tbody td:not(:first-child){width:80px;min-width:80px;max-width:80px;padding:7px 10px}
+/* 과제명은 줄바꿈 없이 한 줄. 열 폭은 과제명 길이에 맞춰 브라우저가 잡는다 */
+.matrix thead th:not(:first-child){white-space:nowrap;vertical-align:middle;min-width:62px;padding:11px 9px;border-bottom:2px solid #dfe3e9;font-size:11.5px}
+.matrix tbody td:not(:first-child){min-width:62px;padding:7px 9px}
 .matrix tbody tr:nth-child(even) td{background:#fafbfc}
 .matrix tbody tr:nth-child(even) td:first-child{background:#f5f7f9}
 .matrix tbody tr:hover td{background:#eff4ff!important;transition:background .1s}
@@ -193,6 +195,8 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .panel,[data-theme=dark] .profile-card{box-shadow:none}
 [data-theme=dark] ::selection{background:#28407a}
 [data-theme=dark] .top{background:rgba(15,18,24,.85)}
+[data-theme=dark] .project-chip.pi{background:#1a2540;border-bottom-color:#26365c}
+[data-theme=dark] .project-chip.ext.pi{background:#241c40;border-color:#4a3d7a}
 [data-theme=dark] .project-chip.ext{border-color:#3f3468;background:#1d1832}
 [data-theme=dark] .project-chip.ext small{color:#b6a0f2}
 [data-theme=dark] .ext-cnt{color:#b6a0f2}
@@ -282,8 +286,9 @@ function ruleBadge(p){const r=ruleInfo(p);const state=(r.lead.length>3||r.part>5
 // 전략기획본부 참여율 시트 밖에 배정된 인원 (합계 100% 미만의 사유)
 const OUTSIDE={"윤윤기":{pct:10,where:"기업지원"},"예준호":{pct:20,where:"시험평가본부"}};
 // 같은 과제에 참여하는 타 본부 인원 (인건비관리 26년 v6.4 8월 변경 · 참여율 시트 전 본부 블록)
+// 양영호 선임은 시트 경영기획·기업지원 블록에 중복 기재돼 있으나 기업지원본부 소속이 맞음(2026-08-18 유정님 확인)
 // 과제별 참여자 보기에만 표시한다. 인원수·매트릭스·공통 과제 찾기는 전략기획본부 41명 기준 그대로.
-const OUTSIDE_MEMBERS={"(과)원격지원":[{name:"김민정",role:"연구원",pct:20,dept:"PG운영본부"}],"(과)강화학습":[{name:"김민정",role:"연구원",pct:10,dept:"PG운영본부"}],"(산)SDV보안평가센터":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"},{name:"서희서",role:"주임",pct:20,dept:"PG운영본부"},{name:"정대훈",role:"주임",pct:20,dept:"PG운영본부"},{name:"장준혁",role:"주임",pct:20,dept:"PG운영본부"},{name:"주용환",role:"선임",pct:20,dept:"기업지원"},{name:"양영호",role:"선임",pct:10,dept:"경영기획"},{name:"하상욱",role:"팀장",pct:10,dept:"PG운영본부"},{name:"백정원",role:"주임",pct:10,dept:"PG운영본부"},{name:"임태호",role:"책임",pct:10,dept:"기업지원"},{name:"이진원",role:"책임",pct:10,dept:"기업지원"},{name:"이진옥",role:"선임",pct:10,dept:"기업지원"},{name:"양영호",role:"선임",pct:10,dept:"기업지원"},{name:"이원용",role:"선임",pct:10,dept:"기업지원"},{name:"이진영",role:"주임",pct:10,dept:"기업지원"},{name:"구본민",role:"주임",pct:10,dept:"기업지원"},{name:"서승희",role:"연구원",pct:10,dept:"기업지원"},{name:"이호열",role:"연구원",pct:10,dept:"기업지원"}],"(산)기능재구성":[{name:"정대훈",role:"주임",pct:20,dept:"PG운영본부"},{name:"서희서",role:"주임",pct:10,dept:"PG운영본부"}],"(산)구동모터모듈":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)초안전플랫폼":[{name:"백기동",role:"연구원",pct:20,dept:"PG운영본부"},{name:"하상욱",role:"팀장",pct:20,dept:"PG운영본부"},{name:"현상엽",role:"선임",pct:20,dept:"PG운영본부"},{name:"이학주",role:"팀장",pct:20,dept:"시험평가"},{name:"백정원",role:"주임",pct:10,dept:"PG운영본부"}],"(산)AAM인버터":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)AAM통합평가":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)인력양성27":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"하상욱",role:"팀장",pct:20,dept:"PG운영본부"},{name:"백정원",role:"주임",pct:20,dept:"PG운영본부"},{name:"김민정",role:"연구원",pct:20,dept:"PG운영본부"}],"(과)3Tier통합검증":[{name:"김기주",role:"책임",pct:10,dept:"PG운영본부"}],"(국)EV컨버전":[{name:"이시목",role:"선임",pct:10,dept:"시험평가"},{name:"김도연",role:"선임",pct:10,dept:"시험평가"},{name:"박세웅",role:"주임",pct:10,dept:"시험평가"},{name:"이현석",role:"연구원",pct:10,dept:"시험평가"}],"(산)합성데이터":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)제조AI":[{name:"백기동",role:"연구원",pct:30,dept:"PG운영본부"},{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"},{name:"김재식",role:"주임",pct:20,dept:"PG운영본부"},{name:"이원용",role:"선임",pct:10,dept:"기업지원"},{name:"이진영",role:"주임",pct:10,dept:"기업지원"},{name:"구본민",role:"주임",pct:10,dept:"기업지원"}],"(산)고성능플랫폼":[{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"}],"(산)SBOM":[{name:"백기동",role:"연구원",pct:20,dept:"PG운영본부"}],"(산)인포테인먼트":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"김민정",role:"연구원",pct:10,dept:"PG운영본부"}],"(산)휴머노이드안전":[{name:"이현석",role:"연구원",pct:30,dept:"시험평가"},{name:"김도연",role:"선임",pct:20,dept:"시험평가"},{name:"박세웅",role:"주임",pct:20,dept:"시험평가"},{name:"심재록",role:"팀장",pct:10,dept:"시험평가"},{name:"조효증",role:"책임",pct:10,dept:"시험평가"},{name:"백준병",role:"팀장",pct:10,dept:"시험평가"},{name:"이시목",role:"선임",pct:10,dept:"시험평가"}],"(산)피지컬AI":[{name:"김재식",role:"주임",pct:20,dept:"PG운영본부"}]};
+const OUTSIDE_MEMBERS={"(과)원격지원":[{name:"김민정",role:"연구원",pct:20,dept:"PG운영본부"}],"(과)강화학습":[{name:"김민정",role:"연구원",pct:10,dept:"PG운영본부"}],"(산)SDV보안평가센터":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"},{name:"서희서",role:"주임",pct:20,dept:"PG운영본부"},{name:"정대훈",role:"주임",pct:20,dept:"PG운영본부"},{name:"장준혁",role:"주임",pct:20,dept:"PG운영본부"},{name:"주용환",role:"선임",pct:20,dept:"기업지원"},{name:"하상욱",role:"팀장",pct:10,dept:"PG운영본부"},{name:"백정원",role:"주임",pct:10,dept:"PG운영본부"},{name:"임태호",role:"책임",pct:10,dept:"기업지원"},{name:"이진원",role:"책임",pct:10,dept:"기업지원"},{name:"이진옥",role:"선임",pct:10,dept:"기업지원"},{name:"양영호",role:"선임",pct:10,dept:"기업지원"},{name:"이원용",role:"선임",pct:10,dept:"기업지원"},{name:"이진영",role:"주임",pct:10,dept:"기업지원"},{name:"구본민",role:"주임",pct:10,dept:"기업지원"},{name:"서승희",role:"연구원",pct:10,dept:"기업지원"},{name:"이호열",role:"연구원",pct:10,dept:"기업지원"}],"(산)기능재구성":[{name:"정대훈",role:"주임",pct:20,dept:"PG운영본부"},{name:"서희서",role:"주임",pct:10,dept:"PG운영본부"}],"(산)구동모터모듈":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)초안전플랫폼":[{name:"백기동",role:"연구원",pct:20,dept:"PG운영본부"},{name:"하상욱",role:"팀장",pct:20,dept:"PG운영본부"},{name:"현상엽",role:"선임",pct:20,dept:"PG운영본부"},{name:"이학주",role:"팀장",pct:20,dept:"시험평가"},{name:"백정원",role:"주임",pct:10,dept:"PG운영본부"}],"(산)AAM인버터":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)AAM통합평가":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)인력양성27":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"하상욱",role:"팀장",pct:20,dept:"PG운영본부"},{name:"백정원",role:"주임",pct:20,dept:"PG운영본부"},{name:"김민정",role:"연구원",pct:20,dept:"PG운영본부"}],"(과)3Tier통합검증":[{name:"김기주",role:"책임",pct:10,dept:"PG운영본부"}],"(국)EV컨버전":[{name:"이시목",role:"선임",pct:10,dept:"시험평가"},{name:"김도연",role:"선임",pct:10,dept:"시험평가"},{name:"박세웅",role:"주임",pct:10,dept:"시험평가"},{name:"이현석",role:"연구원",pct:10,dept:"시험평가"}],"(산)합성데이터":[{name:"조봉균",role:"책임",pct:20,dept:"기업지원"}],"(산)제조AI":[{name:"백기동",role:"연구원",pct:30,dept:"PG운영본부"},{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"},{name:"김재식",role:"주임",pct:20,dept:"PG운영본부"},{name:"이원용",role:"선임",pct:10,dept:"기업지원"},{name:"이진영",role:"주임",pct:10,dept:"기업지원"},{name:"구본민",role:"주임",pct:10,dept:"기업지원"}],"(산)고성능플랫폼":[{name:"조성훈",role:"팀장",pct:20,dept:"PG운영본부"}],"(산)SBOM":[{name:"백기동",role:"연구원",pct:20,dept:"PG운영본부"}],"(산)인포테인먼트":[{name:"하성용",role:"책임",pct:20,dept:"PG운영본부"},{name:"김민정",role:"연구원",pct:10,dept:"PG운영본부"}],"(산)휴머노이드안전":[{name:"이현석",role:"연구원",pct:30,dept:"시험평가"},{name:"김도연",role:"선임",pct:20,dept:"시험평가"},{name:"박세웅",role:"주임",pct:20,dept:"시험평가"},{name:"심재록",role:"팀장",pct:10,dept:"시험평가"},{name:"조효증",role:"책임",pct:10,dept:"시험평가"},{name:"백준병",role:"팀장",pct:10,dept:"시험평가"},{name:"이시목",role:"선임",pct:10,dept:"시험평가"}],"(산)피지컬AI":[{name:"김재식",role:"주임",pct:20,dept:"PG운영본부"}]};
 const selected=new Set();
 let focusedProject=projectNames[0];
 let projQuery='';
@@ -302,11 +307,14 @@ function showTab(id){if(!TAB_IDS.includes(id))id=TAB_IDS[0];
  document.querySelectorAll('#tabBar button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
  window.scrollTo({top:0,behavior:'smooth'})}
 function projectParticipants(name){return PEOPLE.filter(p=>projectPct(p,name)>0).map(p=>({name:p.name,role:p.role,pct:projectPct(p,name)})).sort((a,b)=>b.pct-a.pct||a.name.localeCompare(b.name))}
-function renderProjectView(){const list=projectNames.filter(n=>!projQuery||n.includes(projQuery));if(!list.includes(focusedProject)&&list.length)focusedProject=list[0];$('projectList').innerHTML=list.map(n=>'<button class="name-btn '+(n===focusedProject?'active':'')+'" onclick="focusProject(\''+n+'\')">'+n+' <small>'+projectParticipants(n).length+'명</small></button>').join('')||'<div class="empty">검색 결과 없음</div>';const parts=focusedProject?projectParticipants(focusedProject):[];const totalPct=parts.reduce((s,x)=>s+x.pct,0);
+// 지금 보고 있는 과제의 책임자인지 — 칩에 은은한 배경(.pi)과 배지를 붙이는 데 쓴다
+function isPI(who){const v=PROJECT_PI[focusedProject];return !!(v&&v.pi===who)}
+function piTag(who){const v=PROJECT_PI[focusedProject];return isPI(who)?'<em class="lead-tag'+(v.lead?'':' co')+'">책임</em>':''}
+function renderProjectView(){const list=projectNames.filter(n=>!projQuery||n.includes(projQuery));if(!list.includes(focusedProject)&&list.length)focusedProject=list[0];$('projectList').innerHTML=list.map(n=>'<button class="name-btn '+(n===focusedProject?'active':'')+'" onclick="focusProject(\''+n+'\')">'+n+' <small>'+projectParticipants(n).length+'명</small></button>').join('')||'<div class="empty">검색 결과 없음</div>';const parts=focusedProject?projectParticipants(focusedProject):[];
  const ext=focusedProject?(OUTSIDE_MEMBERS[focusedProject]||[]):[];
- $('projectPanel').innerHTML=focusedProject?'<div class="profile-head"><div><h3>'+focusedProject+'</h3><small>전략기획본부 '+parts.length+'명'+(ext.length?' · <b class="ext-cnt">타 본부 '+ext.length+'명</b>':'')+(PROJECT_PI[focusedProject]?' · 책임자 <b>'+PROJECT_PI[focusedProject].pi+'</b>'+(PROJECT_PI[focusedProject].lead?'<em class="lead-tag" title="주관과제 연구책임자 — 3책(책임자 3과제 제한) 대상">주관 · 3책 대상</em>':'<em class="lead-tag co" title="공동연구개발기관 책임자 — 3책 미포함">공동기관</em>'):'')+'</small></div><div class="profile-total" title="전략기획본부 인원의 참여율 합계 (타 본부 인원은 제외)">'+totalPct+'%</div></div><div class="project-chips">'+parts.map(x=>'<div class="project-chip">'+x.name+(PROJECT_PI[focusedProject]&&PROJECT_PI[focusedProject].pi===x.name?'<em class="lead-tag'+(PROJECT_PI[focusedProject].lead?'':' co')+'">책임</em>':'')+'<small>'+x.role+' · '+fmt(x.pct)+'</small></div>').join('')
- +ext.map(x=>'<div class="project-chip ext" title="'+x.dept+' 소속 — 전략기획본부 참여율 시트 밖 인원">'+x.name
-  +(PROJECT_PI[focusedProject]&&PROJECT_PI[focusedProject].pi===x.name?'<em class="lead-tag'+(PROJECT_PI[focusedProject].lead?'':' co')+'">책임</em>':'')
+ $('projectPanel').innerHTML=focusedProject?'<div class="profile-head"><div><h3>'+focusedProject+'</h3><small>전략기획본부 '+parts.length+'명'+(ext.length?' · <b class="ext-cnt">타 본부 '+ext.length+'명</b>':'')+(PROJECT_PI[focusedProject]?' · 책임자 <b>'+PROJECT_PI[focusedProject].pi+'</b>'+(PROJECT_PI[focusedProject].lead?'<em class="lead-tag" title="주관과제 연구책임자 — 3책(책임자 3과제 제한) 대상">주관 · 3책 대상</em>':'<em class="lead-tag co" title="공동연구개발기관 책임자 — 3책 미포함">공동기관</em>'):'')+'</small></div></div><div class="project-chips">'+parts.map(x=>'<div class="project-chip'+(isPI(x.name)?' pi':'')+'">'+x.name+piTag(x.name)+'<small>'+x.role+' · '+fmt(x.pct)+'</small></div>').join('')
+ +ext.map(x=>'<div class="project-chip ext'+(isPI(x.name)?' pi':'')+'" title="'+x.dept+' 소속 — 전략기획본부 참여율 시트 밖 인원">'+x.name
+  +piTag(x.name)
   +'<small>'+x.dept+' · '+x.role+' · '+fmt(x.pct)+'</small></div>').join('')
  +'</div>':'<div class="empty">과제를 선택하세요.</div>'}
 function renderProjRank(){
@@ -343,29 +351,7 @@ function renderProfiles(){const arr=[...selected].map(n=>PEOPLE.find(p=>p.name==
 function renderMembers(){const q=$('memberSearch').value.trim();$('memberGrid').innerHTML=PEOPLE.map(p=>'<label class="member '+(q&&!p.name.includes(q)?'hidden':'')+'" title="'+p.role+'"><input type="checkbox" value="'+p.name+'" '+(selected.has(p.name)?'checked':'')+'><span>'+p.name+'</span></label>').join('');document.querySelectorAll('#memberGrid input').forEach(box=>box.addEventListener('change',()=>togglePerson(box.value)))}
 function renderSelected(){const arr=selectedPeople();$('selectedStrip').innerHTML=arr.length?arr.map(p=>'<span class="chip"><b>'+p.name+'</b> '+p.projects.length+'개</span>').join(''):'<span class="chip muted">선택된 인원이 없습니다</span>'}
 function renderCommon(){const arr=selectedPeople();if(arr.length<2){$('commonCards').innerHTML='<div class="empty">2명 이상 선택하면 공통 과제가 표시됩니다.</div>';$('overlapList').innerHTML='<div class="empty">선택 인원이 부족합니다.</div>';return}const common=projectNames.filter(name=>arr.every(p=>projectPct(p,name)>0));$('commonCards').innerHTML=common.length?common.map(name=>'<div class="common-card"><b>'+name+'</b><span>'+arr.map(p=>p.name+' '+fmt(projectPct(p,name))).join(' / ')+'</span></div>').join(''):'<div class="empty">선택 인원 전원이 함께 참여하는 과제는 없습니다.</div>';const overlap=projectNames.map(name=>{const members=arr.filter(p=>projectPct(p,name)>0);return {name,members}}).filter(x=>x.members.length>0&&x.members.length<arr.length).sort((a,b)=>b.members.length-a.members.length||a.name.localeCompare(b.name)).slice(0,8);$('overlapList').innerHTML=overlap.length?overlap.map(x=>{const ms=x.members.map(p=>p.name).join(', ');return '<div class="overlap-item" title="'+x.name+': '+ms+'"><div><b>'+x.name+'</b><small>'+ms+'</small></div><span class="chip warn">'+x.members.length+'/'+arr.length+'명</span></div>'}).join(''):'<div class="empty">부분 겹침도 없습니다.</div>'}
-// 원본 표 헤더의 과제명 줄나눔. 브라우저 자동 줄바꿈은 폭에 닿는 대로 끊어
-// 'AAM' 같은 단어를 'AA/M인버터'로 갈라 놓으므로 직접 계산한다.
-// ① 단어(영문·숫자 덩어리) 단위로 끊고 ② 한 단어가 한 줄보다 길 때만 글자로 쪼갠다.
-// 폭 가중치: 한글 1, 그 밖(영문·숫자·괄호·기호) 0.6. 한 줄 최대 MAX.
-function nameLines(name){const w=c=>/[가-힣]/.test(c)?1:0.6,W=s=>[...s].reduce((a,c)=>a+w(c),0);
- const MAX=6.5;
- if(W(name)<=MAX)return[name];
- // 토큰화 — 앞머리 분류표시((산) 등)는 뒤 단어에 붙이고, 영문·숫자 덩어리는 통째로 유지
- const toks=[];const pre=name.match(/^\([^)]*\)/);let rest=pre?name.slice(pre[0].length):name;
- (rest.match(/[A-Za-z0-9][A-Za-z0-9-]*|[^A-Za-z0-9]+/g)||[]).forEach(t=>toks.push(t));
- if(pre)toks.length?toks[0]=pre[0]+toks[0]:toks.push(pre[0]);
- // 한 줄에 못 담는 긴 단어만 글자 단위로 균등 분할
- const parts=[];
- toks.forEach(t=>{if(W(t)<=MAX){parts.push(t);return}
-  const k=Math.ceil(W(t)/MAX),per=W(t)/k;let cur='',acc=0,made=1;
-  [...t].forEach(c=>{if(cur&&made<k&&acc+w(c)/2>per+1e-9){parts.push(cur);cur='';acc=0;made++}cur+=c;acc+=w(c)});
-  if(cur)parts.push(cur)});
- // 단어를 순서대로 줄에 채운다
- const out=[];let cur='';
- parts.forEach(p=>{if(cur&&W(cur+p)>MAX+1e-9){out.push(cur);cur=p}else cur+=p});
- if(cur)out.push(cur);
- return out}
-function renderMatrix(){const headers=matrixOrder.map(p=>'<th title="'+p+'">'+nameLines(p).map(l=>'<span>'+l+'</span>').join('')+'</th>').join('');const rows=PEOPLE.map(person=>'<tr class="'+(selected.has(person.name)?'selected-row':'')+'"><td><b>'+person.name+'</b><br><small>'+person.role+'</small></td>'+matrixOrder.map(name=>{const v=projectPct(person,name);return '<td>'+(v?'<span class="pct '+pctClass(v)+'">'+fmt(v)+'</span>':'')+'</td>'}).join('')+'</tr>').join('');$('matrixWrap').innerHTML='<table><thead><tr><th>성명</th>'+headers+'</tr></thead><tbody>'+rows+'</tbody></table>';syncMatrixScroll()}
+function renderMatrix(){const headers=matrixOrder.map(p=>'<th title="'+p+'">'+p+'</th>').join('');const rows=PEOPLE.map(person=>'<tr class="'+(selected.has(person.name)?'selected-row':'')+'"><td><b>'+person.name+'</b><br><small>'+person.role+'</small></td>'+matrixOrder.map(name=>{const v=projectPct(person,name);return '<td>'+(v?'<span class="pct '+pctClass(v)+'">'+fmt(v)+'</span>':'')+'</td>'}).join('')+'</tr>').join('');$('matrixWrap').innerHTML='<table><thead><tr><th>성명</th>'+headers+'</tr></thead><tbody>'+rows+'</tbody></table>';syncMatrixScroll()}
 // 위/아래 두 가로 스크롤바를 같은 표 폭으로 맞추고 서로 위치를 따라가게 한다
 function syncMatrixScroll(){const top=$('matrixTop'),box=$('matrixScroll');if(!top||!box)return;
  const t=box.querySelector('table');if(!t)return;

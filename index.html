@@ -14,11 +14,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard',"No
 .theme-btn{width:34px;height:34px;padding:0;border-radius:9px;background:transparent;border:1px solid var(--line);font-size:15px;line-height:1;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center}
 .theme-btn:hover{border-color:var(--accent)}
 .brand span{color:var(--muted);font-weight:500;margin-left:8px;font-size:12.5px}
-.tabbar{position:sticky;top:52px;z-index:25;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 1px 2px rgba(16,24,40,.03)}
-.tabbar-inner{max-width:1440px;margin:0 auto;padding:0 28px;display:flex;gap:26px;overflow-x:auto}
-.tabbar button{position:relative;padding:15px 2px 13px;font-size:14.5px;font-weight:700;letter-spacing:-.01em;color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer;transition:color .15s,border-color .15s}
+.tabbar{position:sticky;top:52px;z-index:25;background:rgba(247,248,250,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tabbar-inner{max-width:1440px;margin:0 auto;padding:12px 28px;display:flex;overflow-x:auto}
+.tabbar .seg{display:inline-flex;gap:3px;padding:4px;background:#e9ecf1;border-radius:11px}
+.tabbar button{padding:8px 16px;font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--soft);background:none;border:0;border-radius:8px;white-space:nowrap;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
 .tabbar button:hover{color:var(--ink)}
-.tabbar button.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tabbar button.active{color:var(--accent);background:var(--card);box-shadow:0 1px 2px rgba(16,24,40,.09),0 0 0 1px rgba(16,24,40,.04)}
 .band[hidden]{display:none}
 [id^=sec-]{scroll-margin-top:66px}
 /* ── hero ── */
@@ -128,8 +129,9 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .matrix th{background:#f7f8fa;color:var(--soft);font-weight:700}
 .matrix td:first-child,.matrix th:first-child{position:sticky;left:0;z-index:2;width:82px;min-width:82px;max-width:82px;background:#fff;text-align:center;padding:7px 10px}
 .matrix th:first-child{background:#f7f8fa}
-.matrix thead th:not(:first-child){white-space:normal;word-break:break-all;line-height:1.35;vertical-align:bottom;width:64px;min-width:64px;max-width:64px;padding:9px 6px;border-bottom:2px solid #dfe3e9;font-size:11.5px}
-.matrix tbody td:not(:first-child){width:64px;min-width:64px;max-width:64px;padding:7px 10px}
+.matrix thead th:not(:first-child){line-height:1.4;vertical-align:middle;width:80px;min-width:80px;max-width:80px;padding:10px 5px;border-bottom:2px solid #dfe3e9;font-size:11.5px}
+.matrix thead th:not(:first-child) span{display:block;white-space:nowrap}
+.matrix tbody td:not(:first-child){width:80px;min-width:80px;max-width:80px;padding:7px 10px}
 .matrix tbody tr:nth-child(even) td{background:#fafbfc}
 .matrix tbody tr:nth-child(even) td:first-child{background:#f5f7f9}
 .matrix tbody tr:hover td{background:#eff4ff!important;transition:background .1s}
@@ -184,7 +186,9 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .panel,[data-theme=dark] .profile-card{box-shadow:none}
 [data-theme=dark] ::selection{background:#28407a}
 [data-theme=dark] .top{background:rgba(15,18,24,.85)}
-[data-theme=dark] .tabbar{background:var(--card);border-bottom-color:var(--line);box-shadow:none}
+[data-theme=dark] .tabbar{background:rgba(15,18,26,.9);border-bottom-color:var(--line)}
+[data-theme=dark] .tabbar .seg{background:#1b202b}
+[data-theme=dark] .tabbar button.active{background:#2a3242;color:#8fb0f5;box-shadow:0 1px 2px rgba(0,0,0,.35)}
 [data-theme=dark] .band.alt{background:#131721}
 [data-theme=dark] .band.tint{background:#141c2f;border-top-color:#223354}
 [data-theme=dark] .band.gray{background:#111521}
@@ -230,15 +234,15 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .audit-tag.bad{background:#3a1717;color:#f08a8a}
 @media(max-width:1100px){.duo,.quick-layout,.hero-inner{grid-template-columns:1fr}.figures{flex-wrap:wrap}.figure{flex:1;min-width:150px}}
 @media(max-width:720px){.hero{padding:28px 16px 28px}.band{padding:24px 16px 36px}.top-inner{padding:0 16px}.brand span{display:none}.figures{flex-direction:column}.toolbar,.common-cards,.overlap-list{grid-template-columns:1fr}
-.tabbar-inner{padding:0 16px;gap:18px}.tabbar button{font-size:13.5px;padding:13px 2px 11px}}
+.tabbar-inner{padding:10px 16px}.tabbar button{font-size:12.5px;padding:7px 11px}}
 </style></head>
 <body>
 <nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span>KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>
 <header class="hero"><div class="hero-inner"><div><h1>전략기획본부 8월 과제 참여 현황</h1><p class="lede">이름을 클릭하면 개인별 참여 과제 카드가 바로 표시되고, 여러 인원을 선택하면 공통 과제를 함께 찾을 수 있습니다.</p></div>
 <div class="figures"><div class="figure"><strong>41</strong><span>전략기획 인원</span><small>퇴사자 제외 기준</small></div><div class="figure"><strong>25</strong><span>참여 과제</span><small>참여율 시트 기준</small></div><div class="figure"><strong>2</strong><span>본부 외 배정</span><small>예준호 20% · 윤윤기 10%</small></div></div></div></header>
-<div class="tabbar"><div class="tabbar-inner" id="tabBar" role="tablist">
+<div class="tabbar"><div class="tabbar-inner"><div class="seg" id="tabBar" role="tablist">
 <button type="button" data-tab="sec-trip">공통 과제 찾기</button><button type="button" data-tab="sec-project">과제별 참여자 보기</button><button type="button" data-tab="sec-status">과제 현황과 점검</button><button type="button" data-tab="sec-raw">참여율 원본 표</button>
-</div></div>
+</div></div></div>
 <main>
 <section id="sec-trip" class="band"><div class="band-inner"><div class="sec-head"><h2>공통 과제 찾기</h2><p>이름을 클릭하면 아래에 개인 카드가 나란히 표시되고, 여러 명을 선택하면 오른쪽에서 공통 과제를 찾아 줍니다.</p></div>
 <div class="sec-body duo"><div class="panel"><div class="toolbar"><input id="memberSearch" placeholder="이름으로 빠르게 찾기"><button class="ghost" id="clearBtn">선택 해제</button></div><div id="memberGrid" class="member-grid"></div><div id="selectedStrip" class="selected-strip"></div></div>
@@ -320,7 +324,26 @@ function renderProfiles(){const arr=[...selected].map(n=>PEOPLE.find(p=>p.name==
 function renderMembers(){const q=$('memberSearch').value.trim();$('memberGrid').innerHTML=PEOPLE.map(p=>'<label class="member '+(q&&!p.name.includes(q)?'hidden':'')+'" title="'+p.role+'"><input type="checkbox" value="'+p.name+'" '+(selected.has(p.name)?'checked':'')+'><span>'+p.name+'</span></label>').join('');document.querySelectorAll('#memberGrid input').forEach(box=>box.addEventListener('change',()=>togglePerson(box.value)))}
 function renderSelected(){const arr=selectedPeople();$('selectedStrip').innerHTML=arr.length?arr.map(p=>'<span class="chip"><b>'+p.name+'</b> '+p.projects.length+'개</span>').join(''):'<span class="chip muted">선택된 인원이 없습니다</span>'}
 function renderCommon(){const arr=selectedPeople();if(arr.length<2){$('commonCards').innerHTML='<div class="empty">2명 이상 선택하면 공통 과제가 표시됩니다.</div>';$('overlapList').innerHTML='<div class="empty">선택 인원이 부족합니다.</div>';return}const common=projectNames.filter(name=>arr.every(p=>projectPct(p,name)>0));$('commonCards').innerHTML=common.length?common.map(name=>'<div class="common-card"><b>'+name+'</b><span>'+arr.map(p=>p.name+' '+fmt(projectPct(p,name))).join(' / ')+'</span></div>').join(''):'<div class="empty">선택 인원 전원이 함께 참여하는 과제는 없습니다.</div>';const overlap=projectNames.map(name=>{const members=arr.filter(p=>projectPct(p,name)>0);return {name,members}}).filter(x=>x.members.length>0&&x.members.length<arr.length).sort((a,b)=>b.members.length-a.members.length||a.name.localeCompare(b.name)).slice(0,8);$('overlapList').innerHTML=overlap.length?overlap.map(x=>{const ms=x.members.map(p=>p.name).join(', ');return '<div class="overlap-item" title="'+x.name+': '+ms+'"><div><b>'+x.name+'</b><small>'+ms+'</small></div><span class="chip warn">'+x.members.length+'/'+arr.length+'명</span></div>'}).join(''):'<div class="empty">부분 겹침도 없습니다.</div>'}
-function renderMatrix(){const headers=matrixOrder.map(p=>'<th title="'+p+'">'+p+'</th>').join('');const rows=PEOPLE.map(person=>'<tr class="'+(selected.has(person.name)?'selected-row':'')+'"><td><b>'+person.name+'</b><br><small>'+person.role+'</small></td>'+matrixOrder.map(name=>{const v=projectPct(person,name);return '<td>'+(v?'<span class="pct '+pctClass(v)+'">'+fmt(v)+'</span>':'')+'</td>'}).join('')+'</tr>').join('');$('matrixWrap').innerHTML='<table><thead><tr><th>성명</th>'+headers+'</tr></thead><tbody>'+rows+'</tbody></table>'}
+// 원본 표 헤더의 과제명 줄나눔. 브라우저 자동 줄바꿈에 맡기면 '(과)강화학/습'처럼
+// 마지막 줄에 한 글자만 떨어지므로, 줄 수를 먼저 정하고 줄당 폭을 균등 배분한다.
+// 폭 가중치: 한글 1, 그 밖(영문·숫자·괄호·기호) 0.6. 최대 3줄.
+function nameLines(name){const cs=[...name],W=c=>/[가-힣]/.test(c)?1:0.6;
+ const total=cs.reduce((s,c)=>s+W(c),0),MAX=6.5;
+ const n=Math.min(3,Math.max(1,Math.ceil(total/MAX)));
+ if(n<2)return[name];
+ const target=total/n,out=[];let cur='',acc=0;
+ for(let i=0;i<cs.length;i++){const rest=cs.length-i,need=n-out.length-1;
+  // 이미 마지막 줄이면 더 끊지 않는다(안 그러면 n을 넘겨 3줄·한 글자 줄이 생김)
+  const canBreak=out.length<n-1;
+  if(cur&&canBreak&&((acc+W(cs[i])/2>target+1e-9&&rest>need)||rest<=need)){out.push(cur);cur='';acc=0}
+  cur+=cs[i];acc+=W(cs[i])}
+ if(cur)out.push(cur);
+ // 마지막 줄에 한 글자만 남으면 앞줄에서 한 글자를 넘겨 붙인다
+ const last=out.length-1;
+ if(out.length>1&&[...out[last]].length===1&&[...out[last-1]].length>2){
+  const prev=[...out[last-1]];out[last]=prev.pop()+out[last];out[last-1]=prev.join('')}
+ return out}
+function renderMatrix(){const headers=matrixOrder.map(p=>'<th title="'+p+'">'+nameLines(p).map(l=>'<span>'+l+'</span>').join('')+'</th>').join('');const rows=PEOPLE.map(person=>'<tr class="'+(selected.has(person.name)?'selected-row':'')+'"><td><b>'+person.name+'</b><br><small>'+person.role+'</small></td>'+matrixOrder.map(name=>{const v=projectPct(person,name);return '<td>'+(v?'<span class="pct '+pctClass(v)+'">'+fmt(v)+'</span>':'')+'</td>'}).join('')+'</tr>').join('');$('matrixWrap').innerHTML='<table><thead><tr><th>성명</th>'+headers+'</tr></thead><tbody>'+rows+'</tbody></table>'}
 function renderAll(){renderProfiles();renderMembers();renderSelected();renderCommon();renderMatrix();renderProjectView()}
 $('memberSearch').addEventListener('input',renderMembers);$('clearBtn').addEventListener('click',()=>{selected.clear();renderAll()});$('projectSearch').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){projQuery=$('projectSearch').value.trim();renderProjectView()}});window.togglePerson=togglePerson;window.focusProject=focusProject;window.jumpProject=jumpProject;
 document.getElementById('tabBar').addEventListener('click',e=>{const b=e.target.closest('button[data-tab]');if(b)showTab(b.dataset.tab)});

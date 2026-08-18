@@ -15,8 +15,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard',"No
 .theme-btn:hover{border-color:var(--accent)}
 .brand span{color:var(--muted);font-weight:500;margin-left:8px;font-size:12.5px}
 .top-tabs{display:flex;gap:2px;overflow-x:auto}
-.top-tabs a{padding:7px 11px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap;border-radius:8px;transition:.15s}
-.top-tabs a:hover{color:var(--ink);background:#f1f3f6}
+.top-tabs button{padding:7px 11px;font-size:13px;font-weight:600;color:var(--muted);background:none;border:0;white-space:nowrap;border-radius:8px;cursor:pointer;transition:.15s}
+.top-tabs button:hover{color:var(--ink);background:#f1f3f6}
+.top-tabs button.active{color:#fff;background:var(--accent)}
+.band[hidden]{display:none}
 [id^=sec-]{scroll-margin-top:66px}
 /* ── hero ── */
 .hero{padding:44px 28px 40px;background:linear-gradient(135deg,#16234a,#2457a8 60%,#1686b8)}
@@ -125,7 +127,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .matrix th{background:#f7f8fa;color:var(--soft);font-weight:700}
 .matrix td:first-child,.matrix th:first-child{position:sticky;left:0;z-index:2;width:82px;min-width:82px;max-width:82px;background:#fff;text-align:center;padding:7px 10px}
 .matrix th:first-child{background:#f7f8fa}
-.matrix thead th:not(:first-child){white-space:nowrap;width:64px;min-width:64px;max-width:64px;overflow:hidden;text-overflow:ellipsis;padding:9px 6px;border-bottom:2px solid #dfe3e9;font-size:11.5px}
+.matrix thead th:not(:first-child){white-space:normal;word-break:break-all;line-height:1.35;vertical-align:bottom;width:64px;min-width:64px;max-width:64px;padding:9px 6px;border-bottom:2px solid #dfe3e9;font-size:11.5px}
 .matrix tbody td:not(:first-child){width:64px;min-width:64px;max-width:64px;padding:7px 10px}
 .matrix tbody tr:nth-child(even) td{background:#fafbfc}
 .matrix tbody tr:nth-child(even) td:first-child{background:#f5f7f9}
@@ -148,7 +150,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 /* ── 과제 현황 · 점검 ── */
 .status-layout{display:grid;grid-template-columns:1fr minmax(300px,360px);gap:14px;align-items:start}
 .proj-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
-.pr-head,.pr-row{display:grid;grid-template-columns:1fr 66px 44px 54px;gap:10px;align-items:center}
+.pr-head,.pr-row{display:grid;grid-template-columns:1fr 76px 44px;gap:10px;align-items:center}
 .pr-head{padding:0 6px 8px;font-size:11px;color:var(--muted);border-bottom:1px solid var(--line);font-weight:600}
 .pr-head span:nth-child(n+3){text-align:right}
 .pr-row{padding:7px 6px;border-bottom:1px solid var(--line);cursor:pointer;transition:.12s;border-radius:7px}
@@ -161,7 +163,6 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .pr-bar{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
 .pr-bar i{display:block;height:100%;background:var(--accent);border-radius:999px;opacity:.85}
 .pr-cnt{text-align:right;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
-.pr-sum{text-align:right;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .audit-item{padding:13px 4px;border-bottom:1px solid var(--line)}
 .audit-item:first-child{padding-top:2px}
 .audit-item:last-child{border-bottom:0}
@@ -173,14 +174,6 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .audit-tag.bad{background:#fde3e3;color:#b91c1c}
 .audit-none{padding:8px 4px;color:var(--muted);font-size:13px}
 .audit-foot{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.65}
-details.raw{margin-top:14px;padding:0 22px}
-details.raw summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--soft);padding:18px 0;list-style:none;display:flex;align-items:center;gap:8px}
-details.raw summary::-webkit-details-marker{display:none}
-details.raw summary::before{content:"▶";font-size:9px;color:var(--muted);transition:transform .15s}
-details.raw[open] summary::before{transform:rotate(90deg)}
-details.raw summary:hover{color:var(--accent)}
-details.raw summary span{font-weight:500;color:var(--muted);font-size:12px}
-details.raw .matrix{padding-bottom:22px}
 @media(max-width:1100px){.status-layout{grid-template-columns:1fr}}
 @media(max-width:820px){.proj-cols{grid-template-columns:1fr;gap:0}}
 /* ── dark theme ── */
@@ -190,7 +183,8 @@ details.raw .matrix{padding-bottom:22px}
 [data-theme=dark] .panel,[data-theme=dark] .profile-card{box-shadow:none}
 [data-theme=dark] ::selection{background:#28407a}
 [data-theme=dark] .top{background:rgba(15,18,24,.85)}
-[data-theme=dark] .top-tabs a:hover{background:#1e242f;color:var(--ink)}
+[data-theme=dark] .top-tabs button:hover{background:#1e242f;color:var(--ink)}
+[data-theme=dark] .top-tabs button.active{background:var(--accent);color:#fff}
 [data-theme=dark] .band.alt{background:#131721}
 [data-theme=dark] .band.tint{background:#141c2f;border-top-color:#223354}
 [data-theme=dark] .band.gray{background:#111521}
@@ -238,26 +232,32 @@ details.raw .matrix{padding-bottom:22px}
 @media(max-width:720px){.hero{padding:28px 16px 28px}.band{padding:28px 16px 36px}.top-inner{padding:0 16px}.brand span{display:none}.figures{flex-direction:column}.toolbar,.common-cards,.overlap-list{grid-template-columns:1fr}}
 </style></head>
 <body>
-<nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span>KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><div class="top-tabs"><a href="#sec-trip">공통 과제 찾기</a><a href="#sec-project">과제별 참여자</a><a href="#sec-status">과제 현황·점검</a></div><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>
+<nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span>KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><div class="top-tabs" id="tabBar"><button type="button" data-tab="sec-trip">공통 과제 찾기</button><button type="button" data-tab="sec-project">과제별 참여자 보기</button><button type="button" data-tab="sec-status">과제 현황과 점검</button><button type="button" data-tab="sec-raw">참여율 원본 표</button></div><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>
 <header class="hero"><div class="hero-inner"><div><h1>전략기획본부 8월 과제 참여 현황</h1><p class="lede">이름을 클릭하면 개인별 참여 과제 카드가 바로 표시되고, 여러 인원을 선택하면 공통 과제를 함께 찾을 수 있습니다.</p></div>
 <div class="figures"><div class="figure"><strong>41</strong><span>전략기획 인원</span><small>퇴사자 제외 기준</small></div><div class="figure"><strong>25</strong><span>참여 과제</span><small>참여율 시트 기준</small></div><div class="figure"><strong>2</strong><span>본부 외 배정</span><small>예준호 20% · 윤윤기 10%</small></div></div></div></header>
 <main>
-<section id="sec-trip" class="band tint"><div class="band-inner"><div class="sec-head"><h2>공통 과제 찾기</h2><p>이름을 클릭하면 아래에 개인 카드가 나란히 표시되고, 여러 명을 선택하면 오른쪽에서 공통 과제를 찾아 줍니다.</p></div>
+<section id="sec-trip" class="band"><div class="band-inner"><div class="sec-head"><h2>공통 과제 찾기</h2><p>이름을 클릭하면 아래에 개인 카드가 나란히 표시되고, 여러 명을 선택하면 오른쪽에서 공통 과제를 찾아 줍니다.</p></div>
 <div class="sec-body duo"><div class="panel"><div class="toolbar"><input id="memberSearch" placeholder="이름으로 빠르게 찾기"><button class="ghost" id="clearBtn">선택 해제</button></div><div id="memberGrid" class="member-grid"></div><div id="selectedStrip" class="selected-strip"></div></div>
 <div class="result-col"><div class="panel"><p class="sub-title">전원 공통 과제</p><div id="commonCards" class="common-cards"></div></div><div class="panel"><p class="sub-title">부분 겹침 <small>— 전원 공통이 없을 때 대안</small></p><div id="overlapList" class="overlap-list"></div></div></div></div>
 <div id="profileStack" class="card-row"></div></div></section>
-<section id="sec-project" class="band alt"><div class="band-inner"><div class="sec-head"><h2>과제별 참여자 보기</h2><p>과제를 선택하면 참여자와 참여율이 표시됩니다. 개인 카드의 과제를 눌러도 이곳으로 연결됩니다. 검색은 Enter. 참여자는 전략기획본부 인원만 표시됩니다.</p></div>
+<section id="sec-project" class="band"><div class="band-inner"><div class="sec-head"><h2>과제별 참여자 보기</h2><p>과제를 선택하면 참여자와 참여율이 표시됩니다. 개인 카드의 과제를 눌러도 이곳으로 연결됩니다. 검색은 Enter. 참여자는 전략기획본부 인원만 표시됩니다.</p></div>
 <div class="sec-body quick-layout"><div class="list-col"><input id="projectSearch" placeholder="과제명 검색 후 Enter" style="margin-bottom:10px"><div id="projectList" class="name-list"></div></div><div id="projectPanel" class="profile-card"></div></div></div></section>
-<section id="sec-status" class="band gray"><div class="band-inner"><div class="sec-head"><h2>과제 현황과 점검</h2><p>과제별로 몇 명이 붙어 있고 인건비가 얼마나 실려 있는지를 정렬해서 보여줍니다. 과제를 클릭하면 참여자 목록으로 이동합니다. 오른쪽은 이번 달 확인이 필요한 항목만 모은 것입니다.</p></div>
+<section id="sec-status" class="band"><div class="band-inner"><div class="sec-head"><h2>과제 현황과 점검</h2><p>과제별로 몇 명이 붙어 있고 인건비가 얼마나 실려 있는지를 정렬해서 보여줍니다. 과제를 클릭하면 참여자 목록으로 이동합니다. 오른쪽은 이번 달 확인이 필요한 항목만 모은 것입니다.</p></div>
 <div class="sec-body status-layout">
 <div class="panel"><p class="sub-title">과제별 참여 규모 <small>— 참여 인원 순</small></p>
 <div id="projRank" class="proj-cols"></div></div>
 <div class="panel"><p class="sub-title">이번 달 점검 <small id="auditCount"></small></p><div id="auditList"></div></div></div>
-<details class="raw panel"><summary>참여율 원본 표 보기 <span>— 41명 × 25과제, 시트 대조용</span></summary><div class="matrix"><div id="matrixWrap"></div></div></details>
+</div></section>
+<section id="sec-raw" class="band"><div class="band-inner"><div class="sec-head"><h2>참여율 원본 표 보기</h2><p>참여율 시트(인건비관리)와 같은 과제 순서로 41명 × 25과제를 그대로 옮긴 표입니다. 시트와 대조할 때 쓰세요.</p></div>
+<div class="panel"><div class="matrix"><div id="matrixWrap"></div></div></div>
 </div></section>
 </main><script>
 const PEOPLE=[{"name":"강성은","role":"팀장","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)인력양성27","pct":20},{"name":"(국)EV컨버전","pct":20}]},{"name":"김강민","role":"주임","total":100.0,"projects":[{"name":"(과)강화학습","pct":20},{"name":"(경)운전능력평가","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(산)기능조합","pct":20},{"name":"(산)휴머노이드안전","pct":20}]},{"name":"김명준","role":"주임","total":100.0,"projects":[{"name":"(과)강화학습","pct":30},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":10},{"name":"(산)SBOM","pct":20},{"name":"(산)피지컬AI","pct":20}]},{"name":"김봉섭","role":"실장","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(과)강화학습","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)제조AI","pct":20},{"name":"(산)SBOM","pct":20}]},{"name":"김성영","role":"주임","total":100.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)구동모터모듈","pct":20},{"name":"(산)인력양성27","pct":20},{"name":"(국)EV컨버전","pct":20}]},{"name":"김승철","role":"선임","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(산)SDV보안평가센터","pct":30},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)인력양성27","pct":10},{"name":"(산)제조AI","pct":20}]},{"name":"김윤지","role":"연구원","total":100.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)구동모터모듈","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(국)EV컨버전","pct":20}]},{"name":"김준영","role":"주임","total":100.0,"projects":[{"name":"(경)사고재현","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)인력양성27","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"김태민","role":"주임","total":100.0,"projects":[{"name":"(산)혼합현실","pct":10},{"name":"(산)T-CAR","pct":10},{"name":"(경)운전능력평가","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)인포테인먼트","pct":40}]},{"name":"김태형","role":"팀장","total":100.0,"projects":[{"name":"(경)사고재현","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"김혜지","role":"연구원","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(산)SDV보안평가센터","pct":40},{"name":"(산)초안전플랫폼","pct":10},{"name":"(산)인력양성27","pct":20},{"name":"(국)EV컨버전","pct":10}]},{"name":"류태웅","role":"연구원","total":100.0,"projects":[{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)인력양성27","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"박대훈","role":"선임","total":100.0,"projects":[{"name":"(과)강화학습","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)AAM통합평가","pct":20},{"name":"(국)EV컨버전","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"박선엽","role":"주임","total":100.0,"projects":[{"name":"(경)운전능력평가","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(과)3Tier통합검증","pct":10},{"name":"(산)기능조합","pct":30},{"name":"(산)휴머노이드안전","pct":20}]},{"name":"박하영","role":"주임","total":100.0,"projects":[{"name":"(산)T-CAR","pct":10},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":30},{"name":"(산)SBOM","pct":20},{"name":"(산)피지컬AI","pct":20}]},{"name":"변재국","role":"주임","total":100.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)초안전플랫폼","pct":30},{"name":"(산)AAM인버터","pct":10},{"name":"(산)AAM통합평가","pct":20}]},{"name":"서경덕","role":"주임","total":100.0,"projects":[{"name":"(산)T-CAR","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)SBOM","pct":20},{"name":"(산)인포테인먼트","pct":20}]},{"name":"서우창","role":"팀장","total":100.0,"projects":[{"name":"(산)인력양성27","pct":10},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":30},{"name":"(산)SBOM","pct":20},{"name":"(산)인포테인먼트","pct":20}]},{"name":"성재호","role":"주임","total":100.0,"projects":[{"name":"(경)사고재현","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)인력양성27","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"송인수","role":"주임","total":100.0,"projects":[{"name":"(산)초안전플랫폼","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)SBOM","pct":20},{"name":"(산)피지컬AI","pct":20}]},{"name":"양은주","role":"책임","total":100.0,"projects":[{"name":"(산)혼합현실","pct":20},{"name":"(산)시험표준","pct":20},{"name":"(산)T-CAR","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)제조AI","pct":20}]},{"name":"양현덕","role":"연구원","total":100.0,"projects":[{"name":"(경)운전능력평가","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)휴머노이드안전","pct":20}]},{"name":"예준호","role":"주임","total":80.0,"projects":[{"name":"(산)혼합현실","pct":20},{"name":"(산)시험표준","pct":20},{"name":"(산)T-CAR","pct":20},{"name":"(산)SBOM","pct":20}]},{"name":"우현","role":"주임","total":100.0,"projects":[{"name":"(산)혼합현실","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)피지컬AI","pct":20}]},{"name":"윤경수","role":"책임","total":100.0,"projects":[{"name":"(산)T-CAR","pct":20},{"name":"(산)AAM인버터","pct":10},{"name":"(산)인력양성27","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)고성능플랫폼","pct":30}]},{"name":"윤윤기","role":"책임","total":90.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(경)운전능력평가","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(국)EV컨버전","pct":20},{"name":"(산)휴머노이드안전","pct":10}]},{"name":"윤형석","role":"팀장","total":100.0,"projects":[{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)기능조합","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)SBOM","pct":20},{"name":"(산)피지컬AI","pct":20}]},{"name":"이명수","role":"팀장","total":100.0,"projects":[{"name":"(경)운전능력평가","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)기능조합","pct":20},{"name":"(산)휴머노이드안전","pct":20}]},{"name":"이병욱","role":"주임","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(과)강화학습","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)합성데이터","pct":20}]},{"name":"이선호","role":"주임","total":100.0,"projects":[{"name":"(경)사고재현","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"이유정","role":"주임","total":100.0,"projects":[{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)초안전플랫폼","pct":40},{"name":"(과)3Tier통합검증","pct":20},{"name":"(국)EV컨버전","pct":20}]},{"name":"이정현","role":"주임","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"장인식","role":"주임","total":100.0,"projects":[{"name":"(산)혼합현실","pct":10},{"name":"(산)시험표준","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)초안전플랫폼","pct":30},{"name":"(산)인포테인먼트","pct":20}]},{"name":"정경환","role":"주임","total":100.0,"projects":[{"name":"(경)운전능력평가","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)기능조합","pct":20}]},{"name":"정한석","role":"연구원","total":100.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(과)원격지원","pct":20},{"name":"(산)AAM통합평가","pct":20},{"name":"(국)EV컨버전","pct":40}]},{"name":"조익현","role":"주임","total":100.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(산)구동모터모듈","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(산)AAM통합평가","pct":20},{"name":"(국)EV컨버전","pct":20}]},{"name":"하성민","role":"주임","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(경)운전능력평가","pct":20},{"name":"(산)기능재구성","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)기능조합","pct":20}]},{"name":"한종호","role":"책임","total":100.0,"projects":[{"name":"(국)전기차안전성","pct":20},{"name":"(산)구동모터모듈","pct":10},{"name":"(산)AAM인버터","pct":20},{"name":"(산)AAM통합평가","pct":30},{"name":"(국)EV컨버전","pct":20}]},{"name":"허준호","role":"팀장","total":100.0,"projects":[{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)인력양성27","pct":20},{"name":"(산)합성데이터","pct":20},{"name":"(산)제조AI","pct":20},{"name":"(산)고성능플랫폼","pct":20}]},{"name":"황수진","role":"주임","total":100.0,"projects":[{"name":"(과)원격지원","pct":20},{"name":"(산)SDV보안평가센터","pct":20},{"name":"(산)초안전플랫폼","pct":20},{"name":"(과)3Tier통합검증","pct":20},{"name":"(산)제조AI","pct":20}]},{"name":"황영서","role":"주임","total":100.0,"projects":[{"name":"(과)원격지원","pct":10},{"name":"(과)강화학습","pct":20},{"name":"(산)기능재구성","pct":10},{"name":"(과)3Tier통합검증","pct":40},{"name":"(산)휴머노이드안전","pct":20}]}];
 const projectNames=[...new Set(PEOPLE.flatMap(p=>p.projects.map(x=>x.name)))];
+// 참여율 시트(인건비관리) 원본 열 순서 — 원본 표 보기는 이 순서를 따른다.
+// 시트가 바뀌면 이 배열도 같이 고칠 것(누락/추가는 아래 matrixOrder가 자동 보정).
+const SHEET_ORDER=["(산)혼합현실","(산)시험표준","(산)T-CAR","(국)전기차안전성","(경)사고재현","(과)원격지원","(과)강화학습","(경)운전능력평가","(산)SDV보안평가센터","(산)기능재구성","(산)구동모터모듈","(산)초안전플랫폼","(산)AAM인버터","(산)AAM통합평가","(산)인력양성27","(과)3Tier통합검증","(산)기능조합","(국)EV컨버전","(산)합성데이터","(산)제조AI","(산)고성능플랫폼","(산)SBOM","(산)인포테인먼트","(산)휴머노이드안전","(산)피지컬AI"];
+const matrixOrder=SHEET_ORDER.filter(n=>projectNames.includes(n)).concat(projectNames.filter(n=>!SHEET_ORDER.includes(n)));
 const PROJECT_PI={"(과)원격지원":{pi:"김봉섭",lead:1},"(산)SDV보안평가센터":{pi:"김봉섭",lead:1},"(산)기능재구성":{pi:"윤윤기",lead:1},"(과)3Tier통합검증":{pi:"윤경수",lead:1},"(산)제조AI":{pi:"김봉섭",lead:1},"(산)혼합현실":{pi:"양은주",lead:0},"(산)시험표준":{pi:"양은주",lead:0},"(산)T-CAR":{pi:"윤경수",lead:0},"(국)전기차안전성":{pi:"윤윤기",lead:0},"(경)사고재현":{pi:"김태형",lead:0},"(과)강화학습":{pi:"김봉섭",lead:0},"(경)운전능력평가":{pi:"윤윤기",lead:0},"(산)구동모터모듈":{pi:"조봉균",lead:0},"(산)초안전플랫폼":{pi:"김태형",lead:0},"(산)AAM인버터":{pi:"조봉균",lead:0},"(산)AAM통합평가":{pi:"조봉균",lead:0},"(산)인력양성27":{pi:"윤경수",lead:0},"(산)기능조합":{pi:"윤형석",lead:0},"(국)EV컨버전":{pi:"윤윤기",lead:0},"(산)합성데이터":{pi:"허준호",lead:0},"(산)인포테인먼트":{pi:"서우창",lead:0},"(산)고성능플랫폼":{pi:"윤경수",lead:0},"(산)SBOM":{pi:"김봉섭",lead:0},"(산)휴머노이드안전":{pi:"윤윤기",lead:0},"(산)피지컬AI":{pi:"윤형석",lead:0}};
 function ruleInfo(p){const lead=[],co=[];for(const[n,v]of Object.entries(PROJECT_PI))if(v.pi===p.name)(v.lead?lead:co).push(n);return{lead,co,part:p.projects.length}}
 function ruleBadge(p){const r=ruleInfo(p);const state=(r.lead.length>3||r.part>5)?' bad':r.lead.length===3?' warn':'';const tip='3책5공(국가연구개발혁신법 시행령 제64조): 동시수행 5과제, 연구책임자 3과제 이내'+(r.lead.length?' | 책임과제(주관): '+r.lead.join(', '):'')+(r.co.length?' | 공동기관 책임 '+r.co.length+'건('+r.co.join(', ')+') — 3책 미포함':'')+' | 잔여기간 4개월 미만 등 제외과제 미반영 단순 집계';return '<span class="rule-badge" title="'+tip+'">3책/5공 <span class="rb'+state+'">'+r.lead.length+'/'+r.part+'</span></span>'}
@@ -273,18 +273,24 @@ function projectPct(person,name){const hit=person.projects.find(p=>p.name===name
 function selectedPeople(){return PEOPLE.filter(p=>selected.has(p.name))}
 function togglePerson(name){selected.has(name)?selected.delete(name):selected.add(name);renderAll()}
 function focusProject(name){focusedProject=name;renderProjectView()}
-function jumpProject(name){projQuery='';$('projectSearch').value='';focusProject(name);document.getElementById('sec-project').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function jumpProject(name){projQuery='';$('projectSearch').value='';focusProject(name);showTab('sec-project')}
+// ── 탭 전환 (공통 과제 찾기 / 과제별 참여자 보기 / 과제 현황과 점검 / 참여율 원본 표)
+const TAB_IDS=['sec-trip','sec-project','sec-status','sec-raw'];
+function showTab(id){if(!TAB_IDS.includes(id))id=TAB_IDS[0];
+ TAB_IDS.forEach(t=>{const el=$(t);if(el)el.hidden=(t!==id)});
+ document.querySelectorAll('#tabBar button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+ window.scrollTo({top:0,behavior:'smooth'})}
 function projectParticipants(name){return PEOPLE.filter(p=>projectPct(p,name)>0).map(p=>({name:p.name,role:p.role,pct:projectPct(p,name)})).sort((a,b)=>b.pct-a.pct||a.name.localeCompare(b.name))}
 function renderProjectView(){const list=projectNames.filter(n=>!projQuery||n.includes(projQuery));if(!list.includes(focusedProject)&&list.length)focusedProject=list[0];$('projectList').innerHTML=list.map(n=>'<button class="name-btn '+(n===focusedProject?'active':'')+'" onclick="focusProject(\''+n+'\')">'+n+' <small>'+projectParticipants(n).length+'명</small></button>').join('')||'<div class="empty">검색 결과 없음</div>';const parts=focusedProject?projectParticipants(focusedProject):[];const totalPct=parts.reduce((s,x)=>s+x.pct,0);$('projectPanel').innerHTML=focusedProject?'<div class="profile-head"><div><h3>'+focusedProject+'</h3><small>참여자 '+parts.length+'명'+(PROJECT_PI[focusedProject]?' · 책임자 <b>'+PROJECT_PI[focusedProject].pi+'</b>'+(PROJECT_PI[focusedProject].lead?'<em class="lead-tag" title="주관과제 연구책임자 — 3책(책임자 3과제 제한) 대상">주관 · 3책 대상</em>':'<em class="lead-tag co" title="공동연구개발기관 책임자 — 3책 미포함">공동기관</em>'):'')+'</small></div><div class="profile-total">'+totalPct+'%</div></div><div class="project-chips">'+parts.map(x=>'<div class="project-chip">'+x.name+(PROJECT_PI[focusedProject]&&PROJECT_PI[focusedProject].pi===x.name?'<em class="lead-tag'+(PROJECT_PI[focusedProject].lead?'':' co')+'">책임</em>':'')+'<small>'+x.role+' · '+fmt(x.pct)+'</small></div>').join('')+'</div>':'<div class="empty">과제를 선택하세요.</div>'}
 function renderProjRank(){
  const rows=projectNames.map(n=>{const ps=projectParticipants(n);return{name:n,cnt:ps.length,sum:ps.reduce((s,x)=>s+x.pct,0)}})
   .sort((a,b)=>b.cnt-a.cnt||b.sum-a.sum||a.name.localeCompare(b.name));
  const max=Math.max(...rows.map(r=>r.cnt));
- const head='<div class="pr-head"><span>과제</span><span></span><span>인원</span><span>총 참여율</span></div>';
+ const head='<div class="pr-head"><span>과제</span><span></span><span>인원</span></div>';
  const line=r=>{const v=PROJECT_PI[r.name];const meta=v?(v.lead?'주관':'공동')+' · '+v.pi:'책임자 미등록';
   return '<div class="pr-row" onclick="jumpProject(\''+r.name+'\')" title="'+r.name+' · '+meta+' — 참여자 보기"><div class="pr-name"><b>'+r.name+'</b><small>'+meta+'</small></div>'
    +'<div class="pr-bar"><i style="width:'+Math.round(r.cnt/max*100)+'%"></i></div>'
-   +'<div class="pr-cnt">'+r.cnt+'명</div><div class="pr-sum">'+r.sum+'%</div></div>'};
+   +'<div class="pr-cnt">'+r.cnt+'명</div></div>'};
  const half=Math.ceil(rows.length/2);
  $('projRank').innerHTML='<div>'+head+rows.slice(0,half).map(line).join('')+'</div><div>'+head+rows.slice(half).map(line).join('')+'</div>'}
 function auditItems(){const out=[];
@@ -310,9 +316,10 @@ function renderProfiles(){const arr=[...selected].map(n=>PEOPLE.find(p=>p.name==
 function renderMembers(){const q=$('memberSearch').value.trim();$('memberGrid').innerHTML=PEOPLE.map(p=>'<label class="member '+(q&&!p.name.includes(q)?'hidden':'')+'" title="'+p.role+'"><input type="checkbox" value="'+p.name+'" '+(selected.has(p.name)?'checked':'')+'><span>'+p.name+'</span></label>').join('');document.querySelectorAll('#memberGrid input').forEach(box=>box.addEventListener('change',()=>togglePerson(box.value)))}
 function renderSelected(){const arr=selectedPeople();$('selectedStrip').innerHTML=arr.length?arr.map(p=>'<span class="chip"><b>'+p.name+'</b> '+p.projects.length+'개</span>').join(''):'<span class="chip muted">선택된 인원이 없습니다</span>'}
 function renderCommon(){const arr=selectedPeople();if(arr.length<2){$('commonCards').innerHTML='<div class="empty">2명 이상 선택하면 공통 과제가 표시됩니다.</div>';$('overlapList').innerHTML='<div class="empty">선택 인원이 부족합니다.</div>';return}const common=projectNames.filter(name=>arr.every(p=>projectPct(p,name)>0));$('commonCards').innerHTML=common.length?common.map(name=>'<div class="common-card"><b>'+name+'</b><span>'+arr.map(p=>p.name+' '+fmt(projectPct(p,name))).join(' / ')+'</span></div>').join(''):'<div class="empty">선택 인원 전원이 함께 참여하는 과제는 없습니다.</div>';const overlap=projectNames.map(name=>{const members=arr.filter(p=>projectPct(p,name)>0);return {name,members}}).filter(x=>x.members.length>0&&x.members.length<arr.length).sort((a,b)=>b.members.length-a.members.length||a.name.localeCompare(b.name)).slice(0,8);$('overlapList').innerHTML=overlap.length?overlap.map(x=>{const ms=x.members.map(p=>p.name).join(', ');return '<div class="overlap-item" title="'+x.name+': '+ms+'"><div><b>'+x.name+'</b><small>'+ms+'</small></div><span class="chip warn">'+x.members.length+'/'+arr.length+'명</span></div>'}).join(''):'<div class="empty">부분 겹침도 없습니다.</div>'}
-function renderMatrix(){const headers=projectNames.map(p=>'<th title="'+p+'">'+p+'</th>').join('');const rows=PEOPLE.map(person=>'<tr class="'+(selected.has(person.name)?'selected-row':'')+'"><td><b>'+person.name+'</b><br><small>'+person.role+'</small></td>'+projectNames.map(name=>{const v=projectPct(person,name);return '<td>'+(v?'<span class="pct '+pctClass(v)+'">'+fmt(v)+'</span>':'')+'</td>'}).join('')+'</tr>').join('');$('matrixWrap').innerHTML='<table><thead><tr><th>성명</th>'+headers+'</tr></thead><tbody>'+rows+'</tbody></table>'}
+function renderMatrix(){const headers=matrixOrder.map(p=>'<th title="'+p+'">'+p+'</th>').join('');const rows=PEOPLE.map(person=>'<tr class="'+(selected.has(person.name)?'selected-row':'')+'"><td><b>'+person.name+'</b><br><small>'+person.role+'</small></td>'+matrixOrder.map(name=>{const v=projectPct(person,name);return '<td>'+(v?'<span class="pct '+pctClass(v)+'">'+fmt(v)+'</span>':'')+'</td>'}).join('')+'</tr>').join('');$('matrixWrap').innerHTML='<table><thead><tr><th>성명</th>'+headers+'</tr></thead><tbody>'+rows+'</tbody></table>'}
 function renderAll(){renderProfiles();renderMembers();renderSelected();renderCommon();renderMatrix();renderProjectView()}
 $('memberSearch').addEventListener('input',renderMembers);$('clearBtn').addEventListener('click',()=>{selected.clear();renderAll()});$('projectSearch').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){projQuery=$('projectSearch').value.trim();renderProjectView()}});window.togglePerson=togglePerson;window.focusProject=focusProject;window.jumpProject=jumpProject;
+document.getElementById('tabBar').addEventListener('click',e=>{const b=e.target.closest('button[data-tab]');if(b)showTab(b.dataset.tab)});
 const mwrap=$('matrixWrap');
 function setCol(i,on){mwrap.querySelectorAll('tr').forEach(tr=>{const c=tr.cells[i];if(c)c.classList.toggle('colhi',on)})}
 mwrap.addEventListener('mouseover',e=>{const cell=e.target.closest('td,th');if(cell&&cell.cellIndex>0)setCol(cell.cellIndex,true)});
@@ -322,5 +329,5 @@ function applyTheme(t){document.documentElement.dataset.theme=t;themeBtn.textCon
 let savedTheme='light';try{savedTheme=localStorage.getItem('trip-theme')||'light'}catch(e){}
 applyTheme(savedTheme);
 themeBtn.addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
-renderAll();renderProjRank();renderAudit();
+renderAll();renderProjRank();renderAudit();showTab('sec-trip');
 </script></body></html>

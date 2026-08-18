@@ -14,10 +14,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard',"No
 .theme-btn{width:34px;height:34px;padding:0;border-radius:9px;background:transparent;border:1px solid var(--line);font-size:15px;line-height:1;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center}
 .theme-btn:hover{border-color:var(--accent)}
 .brand span{color:var(--muted);font-weight:500;margin-left:8px;font-size:12.5px}
-.top-tabs{display:flex;gap:2px;overflow-x:auto}
-.top-tabs button{padding:7px 11px;font-size:13px;font-weight:600;color:var(--muted);background:none;border:0;white-space:nowrap;border-radius:8px;cursor:pointer;transition:.15s}
-.top-tabs button:hover{color:var(--ink);background:#f1f3f6}
-.top-tabs button.active{color:#fff;background:var(--accent)}
+.tabbar{position:sticky;top:52px;z-index:25;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.tabbar-inner{max-width:1440px;margin:0 auto;padding:0 28px;display:flex;gap:26px;overflow-x:auto}
+.tabbar button{position:relative;padding:15px 2px 13px;font-size:14.5px;font-weight:700;letter-spacing:-.01em;color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer;transition:color .15s,border-color .15s}
+.tabbar button:hover{color:var(--ink)}
+.tabbar button.active{color:var(--accent);border-bottom-color:var(--accent)}
 .band[hidden]{display:none}
 [id^=sec-]{scroll-margin-top:66px}
 /* ── hero ── */
@@ -34,7 +35,7 @@ h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px;color:#ff
 .figure.warn span::before{background:#f2c063}
 .figure small{display:block;margin-top:2px;color:rgba(255,255,255,.52);font-size:11.5px;padding-left:12px}
 /* ── layout ── */
-main{padding-top:14px}
+main{padding-top:4px}
 .band{padding:38px 28px 48px}
 .band-inner{max-width:1440px;margin:0 auto}
 .band.alt{background:#fff;border-top:1px solid var(--line)}
@@ -183,8 +184,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .panel,[data-theme=dark] .profile-card{box-shadow:none}
 [data-theme=dark] ::selection{background:#28407a}
 [data-theme=dark] .top{background:rgba(15,18,24,.85)}
-[data-theme=dark] .top-tabs button:hover{background:#1e242f;color:var(--ink)}
-[data-theme=dark] .top-tabs button.active{background:var(--accent);color:#fff}
+[data-theme=dark] .tabbar{background:var(--card);border-bottom-color:var(--line);box-shadow:none}
 [data-theme=dark] .band.alt{background:#131721}
 [data-theme=dark] .band.tint{background:#141c2f;border-top-color:#223354}
 [data-theme=dark] .band.gray{background:#111521}
@@ -229,12 +229,16 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .audit-tag.warn{background:#332711;color:#d9a94e}
 [data-theme=dark] .audit-tag.bad{background:#3a1717;color:#f08a8a}
 @media(max-width:1100px){.duo,.quick-layout,.hero-inner{grid-template-columns:1fr}.figures{flex-wrap:wrap}.figure{flex:1;min-width:150px}}
-@media(max-width:720px){.hero{padding:28px 16px 28px}.band{padding:28px 16px 36px}.top-inner{padding:0 16px}.brand span{display:none}.figures{flex-direction:column}.toolbar,.common-cards,.overlap-list{grid-template-columns:1fr}}
+@media(max-width:720px){.hero{padding:28px 16px 28px}.band{padding:24px 16px 36px}.top-inner{padding:0 16px}.brand span{display:none}.figures{flex-direction:column}.toolbar,.common-cards,.overlap-list{grid-template-columns:1fr}
+.tabbar-inner{padding:0 16px;gap:18px}.tabbar button{font-size:13.5px;padding:13px 2px 11px}}
 </style></head>
 <body>
-<nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span>KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><div class="top-tabs" id="tabBar"><button type="button" data-tab="sec-trip">공통 과제 찾기</button><button type="button" data-tab="sec-project">과제별 참여자 보기</button><button type="button" data-tab="sec-status">과제 현황과 점검</button><button type="button" data-tab="sec-raw">참여율 원본 표</button></div><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>
+<nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span>KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>
 <header class="hero"><div class="hero-inner"><div><h1>전략기획본부 8월 과제 참여 현황</h1><p class="lede">이름을 클릭하면 개인별 참여 과제 카드가 바로 표시되고, 여러 인원을 선택하면 공통 과제를 함께 찾을 수 있습니다.</p></div>
 <div class="figures"><div class="figure"><strong>41</strong><span>전략기획 인원</span><small>퇴사자 제외 기준</small></div><div class="figure"><strong>25</strong><span>참여 과제</span><small>참여율 시트 기준</small></div><div class="figure"><strong>2</strong><span>본부 외 배정</span><small>예준호 20% · 윤윤기 10%</small></div></div></div></header>
+<div class="tabbar"><div class="tabbar-inner" id="tabBar" role="tablist">
+<button type="button" data-tab="sec-trip">공통 과제 찾기</button><button type="button" data-tab="sec-project">과제별 참여자 보기</button><button type="button" data-tab="sec-status">과제 현황과 점검</button><button type="button" data-tab="sec-raw">참여율 원본 표</button>
+</div></div>
 <main>
 <section id="sec-trip" class="band"><div class="band-inner"><div class="sec-head"><h2>공통 과제 찾기</h2><p>이름을 클릭하면 아래에 개인 카드가 나란히 표시되고, 여러 명을 선택하면 오른쪽에서 공통 과제를 찾아 줍니다.</p></div>
 <div class="sec-body duo"><div class="panel"><div class="toolbar"><input id="memberSearch" placeholder="이름으로 빠르게 찾기"><button class="ghost" id="clearBtn">선택 해제</button></div><div id="memberGrid" class="member-grid"></div><div id="selectedStrip" class="selected-strip"></div></div>

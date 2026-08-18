@@ -127,7 +127,12 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .overlap-item small{display:block;color:var(--muted);margin-top:1px;line-height:1.5;font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .overlap-item>div{min-width:0}
 /* ── matrix ── */
-.matrix{overflow-x:auto}
+/* 표 안에서 세로·가로로 스크롤. 과제명 행(위)과 성명 열(왼쪽)은 고정돼 따라다닌다 */
+.matrix{overflow:auto;max-height:min(72vh,720px);overscroll-behavior:contain}
+/* border-collapse 표에서 sticky 셀은 테두리가 스크롤에 묻히므로 그림자로 대신 그린다 */
+.matrix thead th{position:sticky;top:0;z-index:3;box-shadow:inset 0 -2px 0 #dfe3e9}
+.matrix thead th:first-child{z-index:5;box-shadow:inset -1px -2px 0 #dfe3e9}
+.matrix td:first-child{box-shadow:inset -1px 0 0 #eef0f3}
 .raw-tools{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .raw-tools input{max-width:240px}
 .raw-hint{font-size:12.5px;color:var(--muted)}
@@ -252,7 +257,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .audit-tag.bad{background:#3a1717;color:#f08a8a}
 @media(max-width:1100px){.duo,.quick-layout,.hero-inner{grid-template-columns:1fr}.figures{flex-wrap:wrap}.figure{flex:1;min-width:150px}}
 @media(max-width:720px){.hero{padding:28px 16px 28px}.band{padding:24px 16px 36px}.top-inner{padding:0 16px}.brand span{display:none}.figures{flex-direction:column}.toolbar,.common-cards,.overlap-list{grid-template-columns:1fr}
-.tabbar-inner{padding:10px 16px}.tabbar button{font-size:12.5px;padding:7px 11px}}
+.tabbar-inner{padding:10px 16px}.tabbar button{font-size:12.5px;padding:7px 11px}.matrix{max-height:66vh}}
 </style></head>
 <body>
 <nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span>KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>

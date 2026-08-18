@@ -93,11 +93,9 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .project-chip small{display:block;color:var(--muted);font-weight:500;margin-top:3px}
 .project-chip.link{cursor:pointer;transition:.12s}
 .project-chip.link:hover{color:var(--accent)}
-/* 과제 책임자 — 은은한 배경으로만 구분 (강조색·굵은 테두리는 쓰지 않는다) */
-.project-chip.pi{background:#eef4ff;border-bottom-color:#dbe6fb;border-radius:8px;padding:10px 11px;margin:3px 0}
-.project-chip.ext.pi{background:#f2ecff;border-color:#b9a3ee}
-/* 타 본부 참여자 — 전략기획본부 인원과 구분되게 보라 테두리로 감싼다 */
-.project-chip.ext{border:1px solid #cdbcf2;background:#f9f6ff;border-radius:9px;padding:9px 11px;margin:5px 0}
+/* 과제 책임자 — 파란 테두리로 구분 */
+.project-chip.pi{border:1px solid #b9cef7;border-radius:9px;background:#f5f9ff;padding:9px 11px;margin:4px 0}
+/* 타 본부 참여자 — 소속·직급 줄을 보라로 (테두리는 책임자 전용이라 쓰지 않는다) */
 .project-chip.ext small{color:#6d28d9}
 .ext-cnt{color:#6d28d9;font-weight:700}
 .meter{height:6px;background:#eef1f4;border-radius:999px;overflow:hidden;margin:12px 0}
@@ -195,9 +193,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 [data-theme=dark] .panel,[data-theme=dark] .profile-card{box-shadow:none}
 [data-theme=dark] ::selection{background:#28407a}
 [data-theme=dark] .top{background:rgba(15,18,24,.85)}
-[data-theme=dark] .project-chip.pi{background:#1a2540;border-bottom-color:#26365c}
-[data-theme=dark] .project-chip.ext.pi{background:#241c40;border-color:#4a3d7a}
-[data-theme=dark] .project-chip.ext{border-color:#3f3468;background:#1d1832}
+[data-theme=dark] .project-chip.pi{border-color:#33507f;background:#151d2f}
 [data-theme=dark] .project-chip.ext small{color:#b6a0f2}
 [data-theme=dark] .ext-cnt{color:#b6a0f2}
 [data-theme=dark] .tabbar{background:rgba(15,18,26,.9);border-bottom-color:var(--line)}

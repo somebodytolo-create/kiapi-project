@@ -265,7 +265,7 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 </style></head>
 <body>
 <nav class="top"><div class="top-inner"><div class="brand"><svg width="20" height="20" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="6" fill="#1d4ed8"/><rect x="5" y="5" width="5" height="5" rx="1.5" fill="#fff"/><rect x="12" y="5" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="5" y="12" width="5" height="5" rx="1.5" fill="#99b9f7"/><rect x="12" y="12" width="5" height="5" rx="1.5" fill="#fff"/></svg>과제 참여 현황<span id="navMonth">KIAPI 전략기획본부 · 2026년 8월</span></div><div class="top-right"><button id="themeBtn" class="theme-btn" title="다크모드 전환">🌙</button></div></div></nav>
-<header class="hero"><div class="hero-inner"><div><h1 id="heroTitle">전략기획본부 8월 과제 참여 현황</h1><p class="lede">이름을 클릭하면 개인별 참여 과제 카드가 바로 표시되고, 여러 인원을 선택하면 공통 과제를 함께 찾을 수 있습니다.</p>
+<header class="hero"><div class="hero-inner"><div><h1 id="heroTitle">전략기획본부 과제 참여 현황</h1><p class="lede">이름을 클릭하면 개인별 참여 과제 카드가 바로 표시되고, 여러 인원을 선택하면 공통 과제를 함께 찾을 수 있습니다.</p>
 <div class="month-pick"><span>해당 월</span><div id="monthBar" role="tablist" aria-label="월 선택"></div></div></div>
 <div class="figures" id="figures"></div></div></header>
 <div class="tabbar"><div class="tabbar-inner"><div class="seg" id="tabBar" role="tablist">
@@ -400,7 +400,6 @@ function rawFind(scroll){const box=$('rawSearch');if(!box)return;
 function renderMonthMeta(){
  document.title='전략기획 과제 참여 현황 ('+CUR.label+')';
  $('navMonth').textContent='KIAPI 전략기획본부 · '+CUR.period;
- $('heroTitle').textContent='전략기획본부 '+CUR.label+' 과제 참여 현황';
  const out=Object.entries(OUTSIDE).sort((a,b)=>b[1].pct-a[1].pct);
  $('figures').innerHTML='<div class="figure"><strong>'+PEOPLE.length+'</strong><span>전략기획 인원</span><small>퇴사자 제외 기준</small></div>'
   +'<div class="figure"><strong>'+projectNames.length+'</strong><span>참여 과제</span><small>참여율 시트 기준</small></div>'

@@ -115,7 +115,8 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .member:has(input:checked)::before{content:"✓";font-size:10px;font-weight:800}
 .member.hidden{display:none}
 .member.ext{color:var(--muted);font-weight:500;background:var(--bg)}
-.member-sep{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;margin:10px 2px 0;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;font-weight:700;color:var(--muted)}
+.member-sep{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;margin:10px 2px 0;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;font-weight:700;color:#6d28d9}
+[data-theme=dark] .member-sep{color:#b6a0f2}
 .member-sep small{font-weight:500;color:var(--muted);font-size:12px}
 .member-sep.hidden{display:none}
 .member input{position:absolute;opacity:0;pointer-events:none;width:0;height:0}

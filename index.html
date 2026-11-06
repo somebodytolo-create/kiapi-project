@@ -114,11 +114,10 @@ button{height:42px;border:0;border-radius:10px;padding:0 15px;font-weight:700;cu
 .member:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .member:has(input:checked)::before{content:"✓";font-size:10px;font-weight:800}
 .member.hidden{display:none}
-.member.ext{color:#6d28d9}
-.member-sep{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;margin:10px 2px 0;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;font-weight:700;color:#6d28d9}
-.member-sep small{font-weight:500;color:var(--soft);font-size:12px}
+.member.ext{color:var(--muted);font-weight:500;background:var(--bg)}
+.member-sep{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;margin:10px 2px 0;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;font-weight:700;color:var(--muted)}
+.member-sep small{font-weight:500;color:var(--muted);font-size:12px}
 .member-sep.hidden{display:none}
-[data-theme=dark] .member.ext,[data-theme=dark] .member-sep{color:#b6a0f2}
 .member input{position:absolute;opacity:0;pointer-events:none;width:0;height:0}
 .selected-strip{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
 .chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:600;background:var(--accent-soft);color:var(--accent)}
@@ -409,7 +408,7 @@ function renderAudit(){const items=auditItems();
  const flagged=new Set(items.filter(x=>x.person).map(x=>x.person)).size;
  $('auditList').innerHTML=items.map(x=>'<div class="audit-item"><span class="audit-tag '+(x.lv===2?'bad':x.lv===1?'warn':'')+'">'+x.tag+'</span><div><b>'+x.who+(x.role?'<small>'+x.role+'</small>':'')+'</b></div><p>'+x.txt+'</p></div>').join('')
   +'<p class="audit-foot">나머지 '+(PEOPLE.length-flagged)+'명은 전략기획본부 참여율 100%, 5과제 이내로 이상이 없습니다. 3책5공은 혁신법 시행령 제64조 기준 단순 집계이며 제외 규정은 반영되지 않았습니다.</p>'}
-function personCard(p){return '<div class="profile-card sm'+(p.ext?' ext':'')+'"><div class="profile-head"><div><h3>'+p.name+'<span class="tot"'+(p.ext?' title="전략기획본부 과제 참여율 합계 — 소속 본부 과제는 포함하지 않음"':'')+'>'+fmt(p.total)+'</span></h3><small>'+(p.ext?'<b class="ext-cnt">'+p.dept+'</b> · '+p.role+' · 전략기획 과제 '+p.projects.length+'개':p.role+' · '+p.projects.length+'개 과제 &nbsp;'+ruleBadge(p))+'</small></div><button class="xbtn" onclick="togglePerson(\''+p.name+'\')" title="선택에서 빼기">✕</button></div><div class="mini-projects">'+p.projects.map(x=>{const v=PROJECT_PI[x.name];const t=v&&v.pi===p.name?(v.lead?'<em class="lead-tag">책임</em>':'<em class="lead-tag co">공동책임</em>'):'';return '<div class="mini-proj" title="과제별 참여자 보기로 이동" onclick="jumpProject(\''+x.name+'\')"><span>'+x.name+t+'</span><b>'+fmt(x.pct)+'</b></div>'}).join('')+'</div></div>'}
+function personCard(p){return '<div class="profile-card sm'+(p.ext?' ext':'')+'"><div class="profile-head"><div><h3>'+p.name+'<span class="tot"'+(p.ext?' title="전략기획본부 과제 참여율 합계 — 소속 본부 과제는 포함하지 않음"':'')+'>'+fmt(p.total)+'</span></h3><small>'+(p.ext?p.dept+' · '+p.role+' · 전략기획 과제 '+p.projects.length+'개':p.role+' · '+p.projects.length+'개 과제 &nbsp;'+ruleBadge(p))+'</small></div><button class="xbtn" onclick="togglePerson(\''+p.name+'\')" title="선택에서 빼기">✕</button></div><div class="mini-projects">'+p.projects.map(x=>{const v=PROJECT_PI[x.name];const t=v&&v.pi===p.name?(v.lead?'<em class="lead-tag">책임</em>':'<em class="lead-tag co">공동책임</em>'):'';return '<div class="mini-proj" title="과제별 참여자 보기로 이동" onclick="jumpProject(\''+x.name+'\')"><span>'+x.name+t+'</span><b>'+fmt(x.pct)+'</b></div>'}).join('')+'</div></div>'}
 function renderProfiles(){const arr=selectedPeople();$('profileStack').innerHTML=arr.map(personCard).join('')}
 function renderMembers(){const q=$('memberSearch').value.trim();
  const pill=p=>'<label class="member'+(p.ext?' ext':'')+(q&&!p.name.includes(q)?' hidden':'')+'" title="'+(p.ext?p.dept+' · ':'')+p.role+'"><input type="checkbox" value="'+p.name+'" '+(selected.has(p.name)?'checked':'')+'><span>'+p.name+'</span></label>';
